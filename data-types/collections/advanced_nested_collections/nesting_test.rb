@@ -16,7 +16,7 @@ require 'minitest/pride'
 class NestedTest < MiniTest::Test
 
   def test_list_of_olive_garden_employess
-    skip
+    # skip
     #^^^ Un-Skip each test
     #=======================
     # EXAMPLE
@@ -26,57 +26,73 @@ class NestedTest < MiniTest::Test
   end
 
   def test_pancake_ingredients
-    skip
+    # skip
     #=======================
     # pancake_ingredients = <your code here>
+    pancake_ingredients =  stores[:dennys][:dishes][0][:ingredients]
+
+    # employees = stores[:dennys][:employees]
     #=======================
     assert_equal ["Flour", "Eggs", "Milk", "Syrup"], pancake_ingredients
+    # p pancake_ingredients
+    # assert_equal ['Bob', 'Sue', 'James'], employees
+    # p employees
   end
 
   def test_rissotto_price
-    skip
+    # skip
     #=======================
     # risotto_price = <your code here>
+    risotto_price = stores[:olive_garden][:dishes][0][:price]
     #=======================
     assert_equal 12, risotto_price
   end
 
   def test_big_mac_ingredients
-    skip
+    # skip
     #=======================
     # big_mac_ingredients = <your code here>
+    big_mac_ingredients = stores[:macdonalds][:dishes][0][:ingredients]
     #=======================
     assert_equal ['Bun','Hamburger','Ketchup','pickles'], big_mac_ingredients
   end
 
   def test_list_of_restaurants
-    skip
+    # skip
     #=======================
     # store_names = <your code here>
+    store_names = stores.keys
+    # p store_names
     #=======================
     assert_equal [:olive_garden, :dennys, :macdonalds], store_names
   end
 
   def test_list_of_dishes_names_for_olive_garden
-    skip
+    # skip
     #=======================
     # dishes_names = <your code here>
+    dishes_names = [stores[:olive_garden][:dishes][0][:name], stores[:olive_garden][:dishes][1][:name] ]
     #=======================
     assert_equal ['Risotto', 'Steak'], dishes_names
-  end
 
+    # p dishes_names
+  end
   def test_list_of_employees_across_all_restaurants
-    skip
+    # skip
     #=======================
     # employee_names = <your code here>
+    employee_names = [stores[:olive_garden][:employees], stores[:dennys][:employees], stores[:macdonalds][:employees]].flatten
+    # p employee_names
     #=======================
     assert_equal ["Jeff","Zach","Samantha","Bob","Sue","James","Alvin","Simon","Theodore"], employee_names
   end
 
   def test_list_of_all_ingredients_across_all_restaurants
-    skip
+    # skip
     #=======================
     # ingredients = <your code here>
+    ingredients = [[stores[:olive_garden][:dishes][0][:ingredients], stores[:olive_garden][:dishes][1][:ingredients] ], [stores[:dennys][:dishes][0][:ingredients], stores[:dennys][:dishes][1][:ingredients] ], [stores[:macdonalds][:dishes][0][:ingredients], stores[:macdonalds][:dishes][1][:ingredients] ] ].flatten
+    # p ingredients
     #=======================
     assert_equal ["Rice",
                   "Cheese",
@@ -99,17 +115,26 @@ class NestedTest < MiniTest::Test
   end
 
   def test_full_menu_price_for_olive_garden
-    skip
+    # skip
     #=======================
     # full_menu_price = <your code here>
+    full_menu_price = stores[:olive_garden][:dishes][0][:price] + stores[:olive_garden][:dishes][1][:price]
+    # p full_menu_price
     #=======================
     assert_equal 27, full_menu_price
   end
 
   def test_full_menu_for_olive_garden
-    skip
+    # skip
     #=======================
     # olive_garden_menu = <your code here>
+    # dish_1 = {stores[:olive_garden][:dishes][0][:name] => stores[:olive_garden][:dishes][0]}
+    # dish_2 = {stores[:olive_garden][:dishes][1][:name] => stores[:olive_garden][:dishes][1]}
+
+  olive_garden_menu =  {stores[:olive_garden][:dishes][0][:name] => stores[:olive_garden][:dishes][0], stores[:olive_garden][:dishes][1][:name] => stores[:olive_garden][:dishes][1]}
+
+
+    # p olive_garden_menu
     #=======================
     expected = ({"Risotto"=>{:name=>"Risotto", :ingredients=>["Rice", "Cheese", "Butter"], :price=>12},
                   "Steak"=>{:name=>"Steak", :ingredients=>["Beef", "Garlic"], :price=>15}})
@@ -117,9 +142,23 @@ class NestedTest < MiniTest::Test
   end
 
   def test_menu_accross_all_restaurants
-     skip
+     # skip
     #=======================
     #  full_menu = <your code here>
+    # full_menu =
+    # {stores[:olive_garden][:dishes][0][:name] => stores[:olive_garden][:dishes][0], stores[:olive_garden][:dishes][1][:name] => stores[:olive_garden][:dishes][1],
+    # stores[:dennys][:dishes][0][:name] => stores[:dennys][:dishes][0], stores[:dennys][:dishes][1][:name] => stores[:dennys][:dishes][1],
+    # stores[:macdonalds][:dishes][0][:name] => stores[:macdonalds][:dishes][0], stores[:macdonalds][:dishes][1][:name] => stores[:macdonalds][:dishes][1]}
+
+    #Melvin's solution wiht .reduce
+    full_menu = stores.reduce({}) do |state, restaurant|
+      restaurant[1][:dishes].map do |dish|
+        state[dish[:name]] = dish
+      end
+      state
+    end
+    # require "pry"; binding.pry
+
     #=======================
     expected = ({"Risotto"=>
                       {:name=>"Risotto", :ingredients=>["Rice", "Cheese", "Butter"], :price=>12},

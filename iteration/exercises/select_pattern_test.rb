@@ -36,18 +36,21 @@ class SelectPatternTest < Minitest::Test
   end
 
   def test_3
-    skip
+    # skip
     rainbow = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"]
     greater_than_four = []
     rainbow.each do |color|
       #Your Code Here
+      if color.length > 4
+        greater_than_four << color
+      end
     end
 
     assert_equal ["orange", "yellow", "green", "indigo", "violet"], greater_than_four
   end
 
   def test_4
-    skip
+    # skip
     rainbow = {
       first: "red",
       second: "orange",
@@ -60,6 +63,9 @@ class SelectPatternTest < Minitest::Test
     greater_than_four = {}
     rainbow.each do |position, color|
       #Your Code Here
+      if color.length > 4
+        greater_than_four[position] = color
+      end
     end
 
     expected = {
@@ -74,16 +80,20 @@ class SelectPatternTest < Minitest::Test
 
 
   def test_5
-    skip
+    # skip
     furniture = ["dining table", "bed", "coffee table", "deck chairs"]
     words_with_c = []
     #Your Code Here
-
+    furniture.each do |str|
+      if str.include?("c") == true
+        words_with_c << str
+      end
+    end
     assert_equal ["coffee table", "deck chairs"], words_with_c
   end
 
   def test_6
-    skip
+    # skip
     furniture = {
       dining_room: "dining table",
       bedroom: "bed",
@@ -92,6 +102,11 @@ class SelectPatternTest < Minitest::Test
     }
     words_with_c = {}
     #Your Code Here
+    furniture.each do |area, furniture|
+      if furniture.include?("c") == true
+        words_with_c[area] = furniture
+      end
+    end
 
     expected = {
       living_room: "coffee table",
@@ -101,21 +116,35 @@ class SelectPatternTest < Minitest::Test
   end
 
   def test_7
-    skip
+    # skip
     meals = ["chips and salsa", "chicken alfredo", "banana pudding"]
     #Your Code Here
+    two_words = []
+    meals.each do |str|
+      if str.split.length <= 2
+        two_words << str
+      end
+      # p two_words
+    end
 
     assert_equal ["chicken alfredo", "banana pudding"], two_words
   end
 
   def test_8
-    skip
+    # skip
     meal = {
       appetizer: "chips and salsa",
       entre: "chicken alfredo",
       dessert: "banana pudding"
     }
     #Your Code Here
+    two_words = {}
+    meal.each do |type, name|
+      if name.split.length <= 2
+        two_words[type] = name
+      end
+      # p two_words
+    end
 
     expected = {
       entre: "chicken alfredo",
@@ -126,15 +155,21 @@ class SelectPatternTest < Minitest::Test
 
 
   def test_9
-    skip
+    # skip
     prices = [3, 1.4, 3.5, 2, 4.9, 9.1, 8.0]
     #Your Code Here
+    floats = []
+    prices.each do |num|
+      if num.class == Float
+        floats << num
+      end
+    end
 
     assert_equal [1.4, 3.5, 4.9, 9.1, 8.0], floats
   end
 
   def test_10
-    skip
+    # skip
     items = {
       tv: 3,
       toaster: 1.4,
@@ -145,6 +180,12 @@ class SelectPatternTest < Minitest::Test
       tonka_truck: 8.0
     }
     #Your Code Here
+    floats = {}
+    items.each do |item, num|
+      if num.class == Float
+        floats[item] = num
+      end
+    end
 
     expected = {
       toaster: 1.4,
